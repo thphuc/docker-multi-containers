@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t thphuc/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true thphuc/react-test npm test
+
+after_success:
+  - docker build -t thphuc/multi-client ./client
+  - docker build -t thphuc/multi-nginx ./nginx
+  - docker build -t thphuc/multi-server ./server
+  - docker build -t thphuc/multi-worker ./worker
