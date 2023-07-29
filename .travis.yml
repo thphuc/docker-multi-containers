@@ -13,3 +13,9 @@ after_success:
   - docker build -t thphuc/multi-nginx ./nginx
   - docker build -t thphuc/multi-server ./server
   - docker build -t thphuc/multi-worker ./worker
+  # Take those images and push them to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push thphuc/multi-client
+  - docker push thphuc/multi-nginx
+  - docker push thphuc/multi-server
+  - docker push thphuc/multi-worker
